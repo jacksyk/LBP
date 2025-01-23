@@ -8,11 +8,11 @@ const pool = mysql.createPool({
   database: 'mysql',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
-// 封装查询方法
-export async function query(sql: string, values?: any[]) {
+// 封装执行方法
+export async function execute(sql: string, values?: any[]) {
   try {
     const [rows] = await pool.execute(sql, values);
     return rows;

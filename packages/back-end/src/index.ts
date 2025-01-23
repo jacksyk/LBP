@@ -1,48 +1,52 @@
 // 导入express
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import process from 'process'
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import process from 'process';
+import dayjs from 'dayjs';
+dotenv.config();
 
-dotenv.config()
-
-import { query } from '../database/pool.js'
+import { execute } from '../database/pool.js';
 
 type logsBodyType = {
-  action: string
-  params: Record<string, any>
-  time: typeof Date.now
-}
+  logs: Array<{
+    action: string;
+    params: Record<string, any>;
+    time: typeof Date.now;
+  }>;
+};
 
 // 创建Web服务器
-const app = express()
+const app = express();
 
-app.use(cors())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-app.get('/', (req, res) => {
-  console.log('正常启动')
-  res.send('ok')
-})
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get('/logs', async (req, res) => {
-  console.log('get>>>')
-  const sql = 'select * from logs'
-  const result = await query(sql)
+  const sql = 'select * from logs';
+  const result = await execute(sql);
   res.json({
-    data: result
-  })
-})
+    data: result,
+  });
+});
 
 app.post('/logs', (req, res) => {
-  console.log('post>>>')
-  const { body } = req
-  const { action, params, time } = body as logsBodyType
-  res.send('ok')
-})
+  const { body } = req;
+  const { logs } = body as logsBodyType;
+
+  for (const log of logs) {
+    const { action, params } = log;
+    const sql = `insert into logs (action, params, time) values (?,?,?)`;
+    execute(sql, [action, params, dayjs().format('YYYY-MM-DD HH:mm:ss')]);
+  }
+
+  res.status(200).json({
+    data: 'success',
+  });
+});
 
 // 监听服务器
 app.listen(process.env.PORT, () => {
-  console.log(`http://localhost:${process.env.PORT}`)
-})
+  console.log(`http://localhost:${process.env.PORT}`);
+});
