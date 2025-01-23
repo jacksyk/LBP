@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+.turbo/
+
+# Editor directories
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
