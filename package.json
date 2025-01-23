@@ -6,9 +6,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pnpm --filter @lbp/utils build",
-    "dev": "pnpm --filter @lbp/web dev",
-    "create1": "node cli/index.js create"
+    "build:web": "pnpm --filter @lbp/web build",
+    "dev:web": "pnpm --filter @lbp/web dev",
+    "dev:back-end": "pnpm --filter @lbp/back-end dev",
+    "build:back-end": "pnpm --filter @lbp/back-end build",
+    "dev:front-end": "pnpm --filter @lbp/front-end dev",
+    "build:front-end": "pnpm --filter @lbp/front-end build",
+    "create": "node cli/index.js create"
   },
   "keywords": [],
   "author": "",
