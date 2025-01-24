@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "ESNext",
+    "sourceMap": true,
+    "target": "es2015",
+    "module": "es2015",
     "moduleResolution": "node",
+    "noEmitOnError": true,
+    "lib": ["es2017", "DOM"],
     "strict": true,
-    "declaration": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    "rootDir": "src",
-    "baseUrl": "."
+    "allowSyntheticDefaultImports": true,
+    "outDir": "out-tsc",
+    "rootDir": "./",
+    "allowJs": true,
+    "noImplicitAny": false
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["./src/**/*.ts"]
 }
