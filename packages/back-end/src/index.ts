@@ -38,16 +38,9 @@ app.post('/logs', (req, res) => {
 
   for (const log of logs) {
     const { action, params } = log;
-    const sql = `insert into logs (action, params, time, userid) values (?,?,?,?)`;
+    const sql = `insert into logs (action, params, time) values (?,?,?)`;
 
-    // TODO:MOCK
-    const userId = [
-      Math.random().toString(36).substring(2, 6),
-      Math.random().toString(36).substring(6, 10),
-      Math.random().toString(36).substring(2, 6),
-      Math.random().toString(36).substring(6, 10),
-    ].join('-');
-    execute(sql, [action, params, new Date(), userId]);
+    execute(sql, [action, params, new Date()]);
   }
 
   res.status(200).json({
