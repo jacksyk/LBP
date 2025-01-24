@@ -12,7 +12,8 @@
     "build:back-end": "pnpm --filter @lbp/back-end build",
     "dev:front-end": "pnpm --filter @lbp/front-end dev",
     "build:front-end": "pnpm --filter @lbp/front-end build",
-    "create": "node cli/index.js create"
+    "dev:docs": "pnpm --filter @lbp/docs docs:dev",
+    "build:docs": "pnpm --filter @lbp/docs docs:build"
   },
   "keywords": [],
   "author": "",
