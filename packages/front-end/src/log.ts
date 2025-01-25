@@ -1,11 +1,7 @@
-import dayjs from 'dayjs';
-
 export class Log {
-  time: string;
   action: string;
   params: Record<string, any>;
   constructor(action: string, params?: Record<string, any>) {
-    this.time = dayjs().format('YYYY-MM-DD HH:mm:ss');
     this.action = action;
     this.params = params || {};
   }
@@ -18,7 +14,6 @@ export class Log {
     return {
       action: this.action,
       params: JSON.stringify(this.params),
-      formatTime: this.time,
     };
   }
 }

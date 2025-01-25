@@ -1,11 +1,13 @@
-import { Log, LogGroup } from '@lbp/front-end';
+import { Publisher } from '@lbp/front-end';
+
+const publisher = new Publisher('http://localhost:3000');
 
 function App() {
   const handleClick = () => {
-    const log = new Log('12222', 'expose', {});
-    const logGroup = new LogGroup();
-    logGroup.addLog(log);
-    logGroup.publish();
+    publisher.sendLog('12222', {
+      name: 'expose',
+      userId: '123',
+    });
   };
 
   return (

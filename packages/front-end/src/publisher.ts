@@ -14,10 +14,13 @@ export class Publisher {
   /** 日志组 */
   logGroup: LogGroup;
 
+  /** timerId */
+  timerId: number | null;
   constructor(url: string) {
     this.url = url;
     this.commonParams = {};
     this.logGroup = new LogGroup('http://localhost:3000/logs');
+    this.timerId = null;
   }
 
   /** 设置公参 */
@@ -26,12 +29,18 @@ export class Publisher {
   }
 
   /** 发送事件 */
-  sendEventLog(event: string, params?: Record<string, any>) {
-    if (typeof params === 'object') {
-      Object.assign(params, this.commonParams);
+  sendLog(event: string, params?: Record<string, any>) {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
     }
-    const log = new Log(event, params);
-    this.logGroup.addLog(log);
-    this.logGroup.publish();
+
+    this.timerId = setTimeout(() => {
+      if (typeof params === 'object') {
+        Object.assign(params, this.commonParams);
+      }
+      const log = new Log(event, params);
+      this.logGroup.addLog(log);
+      this.logGroup.publish();
+    }, 2000);
   }
 }
